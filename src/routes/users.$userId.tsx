@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { ErrorComponent, createFileRoute } from '@tanstack/react-router'
-import type { ErrorComponentProps } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 import { NotFound } from '~/components/NotFound'
 import { userQueryOptions } from '~/utils/users'
+import { UserErrorComponent } from '~/views/user/user-error'
 
 export const Route = createFileRoute('/users/$userId')({
   loader: async ({ context, params: { userId } }) => {
@@ -15,9 +15,7 @@ export const Route = createFileRoute('/users/$userId')({
   },
 })
 
-export function UserErrorComponent({ error }: ErrorComponentProps) {
-  return <ErrorComponent error={error} />
-}
+
 
 function UserComponent() {
   const params = Route.useParams()
