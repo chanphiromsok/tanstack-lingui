@@ -2,13 +2,17 @@
 import { hydrateRoot } from "react-dom/client";
 import { RouterClient } from "@tanstack/react-router/ssr/client";
 import { getRouter } from "./router";
-import { StrictMode } from "react";
+import { startTransition, StrictMode } from "react";
+import { setupI18n } from "@lingui/core";
 
-const router = getRouter();
+const i18n = setupI18n({});
+const router = getRouter({ i18n: i18n });
 
-hydrateRoot(
-  document,
-  <StrictMode>
-    <RouterClient router={router} />
-  </StrictMode>
-);
+startTransition(() => {
+  hydrateRoot(
+    document,
+    <StrictMode>
+      <RouterClient router={router} />
+    </StrictMode>
+  );
+});
