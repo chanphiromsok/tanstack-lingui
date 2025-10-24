@@ -11,10 +11,11 @@ import { I18nProvider } from "@lingui/react";
 import { getLocaleFromRequest } from "./modules/lingui/i18nserver";
 const isomorphicI18 = createIsomorphicFn()
   .server(() => {
-    // dynamicActivate(getLocaleFromRequest());
+    dynamicActivate(getLocaleFromRequest());
     return i18n;
   })
   .client(() => {
+    dynamicActivate("km");
     return i18n;
   });
 
