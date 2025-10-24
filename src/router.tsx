@@ -6,11 +6,17 @@ import { DefaultCatchBoundary } from "./components/DefaultCatchBoundary";
 import { NotFound } from "./components/NotFound";
 import { i18n } from "@lingui/core";
 import { createIsomorphicFn } from "@tanstack/react-start";
+import { dynamicActivate } from "./modules/lingui/i18n";
 import { I18nProvider } from "@lingui/react";
-
+import { getLocaleFromRequest } from "./modules/lingui/i18nserver";
 const isomorphicI18 = createIsomorphicFn()
-  .server(() => i18n)
-  .client(() => i18n);
+  .server(() => {
+    // dynamicActivate(getLocaleFromRequest());
+    return i18n;
+  })
+  .client(() => {
+    return i18n;
+  });
 
 export function getRouter() {
   const queryClient = new QueryClient();
@@ -22,9 +28,9 @@ export function getRouter() {
     defaultNotFoundComponent: () => <NotFound />,
     scrollRestoration: true,
     defaultPreload: "intent",
-    // Wrap: ({ children ,}) => {
-    //   return <I18nProvider i18n={i18n}>{children}</I18nProvider>;
-    // },
+    Wrap: ({ children }) => {
+      return <I18nProvider i18n={i18n}>{children}</I18nProvider>;
+    },
   });
 
   setupRouterSsrQueryIntegration({

@@ -7,7 +7,7 @@ import {
 import handler from "@tanstack/react-start/server-entry";
 import { getRouter } from "./router";
 
-export function render({ request }: { request: Request }) {
+export async function render({ request }: { request: Request }) {
   const handler = createRequestHandler({
     request,
     createRouter() {

@@ -4,11 +4,9 @@ import {
   setResponseHeader,
 } from "@tanstack/react-start/server";
 import { parse, serialize } from "cookie-es";
+import { defaultLocale, isLocaleValid } from "./i18n";
 
-import { defaultLocale, dynamicActivate, isLocaleValid } from "./i18n";
-import { createIsomorphicFn } from "@tanstack/react-start";
-
-function getLocaleFromRequest() {
+export function getLocaleFromRequest() {
   const request = getRequest();
   const headers = getRequestHeaders();
   const cookie = parse(headers.get("Cookie") ?? "");
@@ -48,7 +46,3 @@ function getLocaleFromRequest() {
 
   return defaultLocale;
 }
-
-export const setupLocaleFromRequest = createIsomorphicFn()
-  .server(() => dynamicActivate(getLocaleFromRequest()))
-  .client(() => dynamicActivate(getLocaleFromRequest()));
